@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require_relative '../lib/comic_informer'
+
+ComicInformer::CLI.new.call #Calling the namespace from CLI.rb, creating a new instance with .new, and running the method call
