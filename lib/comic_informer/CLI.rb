@@ -5,6 +5,7 @@ class ComicInformer::CLI #namespacing this CLI module that belongs to ComicInfor
     user_options
     list_user_options
     get_user_option
+    show_comics
   end
 
   def user_options
@@ -18,13 +19,18 @@ class ComicInformer::CLI #namespacing this CLI module that belongs to ComicInfor
   end
 
   def get_user_option
-    chosen_option = gets.strip
-    if valid_input(chosen_option.to_i, @user_options)
-    end
+    chosen_option = gets.strip.to_i
+    show_comics(chosen_option) if valid_input(chosen_option, @user_options)
   end
 
   def valid_input(input, data)
     input.to_i <= data.length && input.to_i > 0
+  end
+
+  def show_comics(chosen_option)
+    comic_list = @user_options[chosen_option - 1]
+    puts "Here is the list of the #{comic_list}"
+    binding.pry
   end
 
 end
