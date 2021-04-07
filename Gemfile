@@ -1,4 +1,4 @@
 source "https://rubygems.org"
-gem 'pry'
+require 'pry'
 # Specify your gem's dependencies in comic_informer.gemspec
 gemspec
