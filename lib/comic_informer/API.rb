@@ -6,7 +6,12 @@ class ComicInformer::API
     get("/comics/v1/new")
   end
 
-  # def users
-  #   self.class.get("/2.2/users", @options)
-  # end
+  def self.future_release
+    get("/comics/v1/future")
+  end
+
+  def self.last_week_release
+    get("/comics/v1/previous")
+  end
+
 end
