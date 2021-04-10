@@ -8,17 +8,17 @@ class ComicInformer::API
 
   def self.new_release
     @@new << get("/comics/v1/new").to_yaml
-    puts @@new
+    puts @@new, ""
   end
 
   def self.future_release
     @@future << get("/comics/v1/future").to_yaml
-    puts @@future
+    puts @@future, ""
   end
 
   def self.last_week_release
     @@previous << get("/comics/v1/previous").to_yaml
-    puts @@previous
+    puts @@previous, ""
   end
 
 end
