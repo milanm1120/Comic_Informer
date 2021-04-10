@@ -2,35 +2,22 @@ class ComicInformer::CLI #namespacing this CLI module that belongs to ComicInfor
 
   def call
     puts "Welcome to Comic Informer!",""
+    while @chosen_option != 4
       user_options
       list_user_options
-      puts "","Please select an option from the list above."
       get_user_input
-  end
-
-  def get_comic_list
-    if @chosen_option == 1
-      raw_new = ComicInformer::API.new_release
-      raw_new["comics"].first(10)
-    elsif @chosen_option == 2
-      raw_future = ComicInformer::API.future_release
-      raw_future["comics"].first(10)
-    elsif @chosen_option == 3
-      raw_last = ComicInformer::API.last_week_release
-      raw_last["comics"].first(10)
-    else
-      valid_input
     end
   end
 
   def user_options
-    @user_options = ["New Releases", "Next Weeks Releases", "Last Weeks Releases"]
+    @user_options = ["New Releases", "Future Releases", "Last Weeks Releases", "Exit"]
   end
 
   def list_user_options
-    @user_options.each_with_index do |release, index|
-      puts "#{index + 1}. #{release}"
+    @user_options.each_with_index do |options, index|
+      puts "#{index + 1}. #{options}"
     end
+    puts "","Please select an option from the list above."
   end
 
   def get_user_input
@@ -43,14 +30,27 @@ class ComicInformer::CLI #namespacing this CLI module that belongs to ComicInfor
       true
     else
       puts "Please enter a valid selection"
-      get_user_input
     end
   end
 
   def show_comics(chosen_option)
     comic_list = @user_options[chosen_option - 1]
-    puts "Here is the list of the #{comic_list}"
-    puts get_comic_list
+    get_comic_list
+  end
+
+  def get_comic_list
+    if @chosen_option == 1
+      puts "Here is this weeks Newest Releases:"
+      ComicInformer::API.new_release
+    elsif @chosen_option == 2
+      puts "Here are Future Releases:"
+      ComicInformer::API.future_release
+    elsif @chosen_option == 3
+      puts "Here is Last Weeks Releases"
+      ComicInformer::API.last_week_release
+    else @chosen_option == 4
+      goodbye
+    end
   end
 
   def goodbye
