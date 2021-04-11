@@ -7,7 +7,7 @@ class ComicInformer::API
   @@previous = []
 
   def self.new_release
-    @@new << get("/comics/v1/new").to_yaml
+  @@new << get("/comics/v1/new").to_yaml
     puts @@new, ""
   end
 
