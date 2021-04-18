@@ -54,11 +54,11 @@ class ComicInformer::CLI #namespacing this CLI module that belongs to ComicInfor
       puts "","Please select an option from the list above."
 
       publisher_input = gets.strip.to_i
-      user_input_of_publisher = publishers[publisher_input.to_i]
-      # TODO: handle invalid input
+      user_input_of_publisher = publishers[publisher_input.to_i-1]
+
 
       # filter the list on the publisher
-      filter_comics(comics, user_input_of_publisher)
+      ComicInformer::ComicsOutput.filter_comics(comics, user_input_of_publisher)
 
     when 2
       puts "Here are Future Releases:"

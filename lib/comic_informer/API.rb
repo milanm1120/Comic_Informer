@@ -7,10 +7,10 @@ class ComicInformer::API
   end
 
   def self.future_release
-    puts get("/comics/v1/future")
+    get("/comics/v1/future")
   end
 
   def self.last_week_release
-    puts get("/comics/v1/previous")
+    get("/comics/v1/previous")
   end
 end

@@ -5,13 +5,13 @@ class ComicInformer::ComicsOutput
     comics['comics'].each do |comic|
       publishers << comic['publisher']
     end
-    publishers.uniq
+    publishers.uniq.sort!
   end
 
-  def filter_comics(comics, user_input_of_publisher)
+  def self.filter_comics(comics, user_input_of_publisher)
     comics['comics'].each do |comic|
       if user_input_of_publisher == comic['publisher']
-        output = "\nTitle: #{comic['title']}\nCreators: #{comic['creators']}\nRelease Date: #{comic['release_date']}\n"
+        output = "\nTitle: #{comic['title']}\nCreators: #{comic['creators']}\nRelease Date: #{comic['release_date']}\nPrice: #{price['price']}"
 
         if comic['description'] != ''
           output += "Description: #{comic['description']}\n"
@@ -19,7 +19,7 @@ class ComicInformer::ComicsOutput
 
         puts output
       end
-
+    end
   end
 end
 
