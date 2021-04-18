@@ -39,16 +39,34 @@ class ComicInformer::CLI #namespacing this CLI module that belongs to ComicInfor
   end
 
   def print_comic_list
-    if @input == 1
+    case @input
+    when 1
       puts "Here is this weeks Newest Releases:"
-      ComicInformer::API.new_release
-    elsif @input == 2
+      comics = ComicInformer::API.new_release
+
+      # get unique list publishers
+      publishers = ComicInformer::ComicsOutput.get_unique_publishers(comics)
+
+      # get user input on publishers
+      publishers.each_with_index do |publisher, index|
+        puts "#{index + 1}. #{publisher}"
+      end
+      puts "","Please select an option from the list above."
+
+      publisher_input = gets.strip.to_i
+      user_input_of_publisher = publishers[publisher_input.to_i]
+      # TODO: handle invalid input
+
+      # filter the list on the publisher
+      filter_comics(comics, user_input_of_publisher)
+
+    when 2
       puts "Here are Future Releases:"
       ComicInformer::API.future_release
-    elsif @input == 3
+    when 3
       puts "Here is Last Weeks Releases"
       ComicInformer::API.last_week_release
-    else @input == 4
+    when 4
       goodbye
     end
   end
