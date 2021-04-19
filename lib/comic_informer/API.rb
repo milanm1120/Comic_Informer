@@ -13,4 +13,5 @@ class ComicInformer::API
   def self.last_week_release
     get("/comics/v1/previous")
   end
+
 end
