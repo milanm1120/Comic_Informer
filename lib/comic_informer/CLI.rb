@@ -2,7 +2,7 @@ class ComicInformer::CLI #namespacing this CLI module that belongs to ComicInfor
 
   #start of the CLI program. ComicInformer::CLI.new.call is called under ./bin/comic_informer
   #welcomes user and shows user valid inputs. Option 4 is the exit the program.
-  def call
+  def level_one
     puts "","Welcome to Comic Informer!",""
     while @input != 4
       options
@@ -53,28 +53,32 @@ class ComicInformer::CLI #namespacing this CLI module that belongs to ComicInfor
       when 1
         puts "","Here is a list of this weeks Newest Releases:",""
         @comics = ComicInformer::API.new_release
-        publisher_list
+        level_two
       when 2
         puts "","Here is a list of Future Releases:",""
         @comics = ComicInformer::API.future_release
-        publisher_list
+        level_two
       when 3
         puts "","Here is a list of Last Weeks Releases",""
         @comics = ComicInformer::API.last_week_release
-        publisher_list
+        level_two
       when 4
         goodbye
     end
   end
 
-  def publisher_list
-    # get unique list publishers from ComicInformer::Publsher
-    @publishers = ComicInformer::Publisher.get_unique_publishers(@comics)
+  def level_two
+    publisher_list
     publisher_index
     publisher_user_input
   end
 
-    # list avilable publishers for the week.
+  # get unique list publishers from ComicInformer::Publsher
+  def publisher_list
+    @publishers = ComicInformer::Publisher.get_unique_publishers(@comics)
+  end
+
+  # list avilable publishers for the week.
   def publisher_index
     @publishers.each_with_index do |publisher, index|
       puts "#{index + 1}. #{publisher}"
