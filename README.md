@@ -1,6 +1,6 @@
 # ComicInformer
 
-Get a list of the newest comicbooks being released from DC Comics and Marvel this week, previous releases and future releases!
+Get a list of the newest comicbooks being released from Major Publishers like DC Comics, Marvel Studios, BOOM! Studios, Dark Horse Comics and so many more! Look up by New Releases, Last Weeks Release or Future Release from your favorite publishers!
 
 ## Installation
 
