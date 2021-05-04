@@ -1,5 +1,6 @@
 require "pry"
 require "httparty"
+require "colorize"
 
 require_relative "./comic_informer/version"
 require_relative "comic_informer/CLI"

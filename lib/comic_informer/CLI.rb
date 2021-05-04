@@ -3,12 +3,33 @@ class ComicInformer::CLI #namespacing this CLI module that belongs to ComicInfor
   #start of the CLI program. ComicInformer::CLI.new.call is called under ./bin/comic_informer
   #welcomes user and shows user valid inputs. Option 4 is the exit the program.
   def level_one
-    puts "","Welcome to Comic Informer!",""
+    logo
     while @input != 4
       options
       list_user_options
       get_user_input
     end
+  end
+
+  def logo
+    puts ""
+    puts "MMMMMMMMMMMMMMMMMMMMM.                              MMMMMMMMMMMMMMMMMMMMM".yellow
+    puts " `MMMMMMMMMMMMMMMMMMMM           M    M            MMMMMMMMMMMMMMMMMMMM'".yellow
+    puts "   `MMMMMMMMMMMMMMMMMMM          MMMMMM          MMMMMMMMMMMMMMMMMMM'".yellow
+    puts "     MMMMMMMMMMMMMMMMMMM-_______MMMMMMMM_______-MMMMMMMMMMMMMMMMMMM".yellow
+    puts "      MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM".yellow
+    puts "      MMMMMMMMMMMMMMMM                             MMMMMMMMMMMMMMM".yellow
+    print "      MMMMMMMMMMMMMMM".yellow  
+    print "   Welcome to Comic Informer!  ".white   
+    puts "MMMMMMMMMMMMMM".yellow
+    puts "     .MMMMMMMMMMMMMMMM                             MMMMMMMMMMMMMMM.".yellow
+    puts "    MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM".yellow
+    puts "                     `MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM'".yellow
+    puts "                          `MMMMMMMMMMMMMMMMMM'".yellow
+    puts "                              `MMMMMMMMMM'".yellow
+    puts "                                 MMMMMM".yellow
+    puts "                                  MMMM".yellow
+    puts "                                   MM".yellow
   end
 
   #names of  user options.
@@ -19,7 +40,7 @@ class ComicInformer::CLI #namespacing this CLI module that belongs to ComicInfor
   #indexes user options. index +1 because arrays start at 0, allows user input to start at 1.
   def list_user_options
     @options.each_with_index do |option, index|
-      puts "#{index + 1}. #{option}"
+      puts "#{index + 1}. #{option}".blue
     end
     puts "","Please select an option from the list above."
   end
@@ -36,7 +57,7 @@ class ComicInformer::CLI #namespacing this CLI module that belongs to ComicInfor
     if @input.to_i <= options.length && @input.to_i > 0
       true
     else
-      puts "","Your input was not recognized. Please enter a valid selection.",""
+      puts "\nYour input was not recognized. Please enter a valid selection.\n".red
     end
   end
 
@@ -51,15 +72,15 @@ class ComicInformer::CLI #namespacing this CLI module that belongs to ComicInfor
   def print_publisher_list
     case @input
       when 1
-        puts "","Here is a list of this weeks Newest Releases:",""
+        puts "\nHere is a list of this weeks Newest Releases:\n".red
         @comics = ComicInformer::API.new_release
         level_two
       when 2
-        puts "","Here is a list of Future Releases:",""
+        puts "\nHere is a list of Future Releases:\n".red
         @comics = ComicInformer::API.future_release
         level_two
       when 3
-        puts "","Here is a list of Last Weeks Releases",""
+        puts "\nHere is a list of Last Weeks Releases:\n".red
         @comics = ComicInformer::API.last_week_release
         level_two
       when 4
@@ -83,7 +104,7 @@ class ComicInformer::CLI #namespacing this CLI module that belongs to ComicInfor
     @publishers.each_with_index do |publisher, index|
       puts "#{index + 1}. #{publisher}"
     end
-    puts "","Please select a publisher from the list above."
+    puts "\nPlease select a publisher from the list above.\n"
   end
 
   #shows list of publisher once users input is validated.
@@ -98,7 +119,7 @@ class ComicInformer::CLI #namespacing this CLI module that belongs to ComicInfor
       true
     else
       publisher_index
-      puts "","Your input was not recognized. Please enter a valid selection"
+      puts "\nYour input was not recognized. Please enter a valid selection\n".red
       publisher_user_input
     end
   end
@@ -113,7 +134,32 @@ class ComicInformer::CLI #namespacing this CLI module that belongs to ComicInfor
 
   #goodbye message to user.
   def goodbye
-    puts "Come back next week for a brand new list of comics! Happy Reading!",""
+
+    puts "          ,,########################################,,".red
+    puts "       .*##############################################*".red
+    puts "     ,*####*:::*########***::::::::**######:::*###########,".red
+    puts "   .*####:    *#####*.                 :*###,.#######*,####*.".red
+    puts "  *####:    *#####*                      .###########*  ,####*".red
+    puts ".*####:    ,#######,                        ##########*    :####*".red
+    puts "*####.    :#########*,                       ,,,,,,,,.      ,####:".red
+    puts "  ####*  ,##############****************:,,               .####*".red
+    puts "   :####*#####################################**,        *####.".red
+    puts "     *############################################*,   :####:".red
+    puts "Come back next week for a brand new list of comics! Happy Reading!"
+    puts "       :#####:*****#####################################.".red
+    puts "         *####:                  .,,,:*****###########,".red
+    puts "          .*####,                            *######*".red
+    puts "            .####* :*#######*               ,#####*".red
+    puts "              *###############*,,,,,,,,::**######,".red
+    puts "                *##############################:".red
+    puts "                  *####*****##########**#####*".red
+    puts "                   .####*.            :####*".red
+    puts "                     :####*         .#####,".red
+    puts "                       *####:      *####:".red
+    puts "                        .*####,  *####*".red
+    puts "                          :####*####*".red
+    puts "                            *######,".red
+    puts "                              *##,".red
   end
 
 end
