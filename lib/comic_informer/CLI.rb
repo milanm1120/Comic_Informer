@@ -42,7 +42,7 @@ class ComicInformer::CLI #namespacing this CLI module that belongs to ComicInfor
     @options.each_with_index do |option, index|
       puts "#{index + 1}. #{option}".blue
     end
-    puts "","Please select an option from the list above."
+    puts "\nPlease select an option from the list above."
   end
 
   #gets user input from terminal. Shows comic list after verifying throught valid input medthod.
@@ -160,6 +160,7 @@ class ComicInformer::CLI #namespacing this CLI module that belongs to ComicInfor
     puts "                          :####*####*".red
     puts "                            *######,".red
     puts "                              *##,".red
+    puts ""
   end
 
 end
