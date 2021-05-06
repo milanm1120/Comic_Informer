@@ -5,8 +5,7 @@ class ComicInformer::CLI #namespacing this CLI module that belongs to ComicInfor
   def level_one
     logo
     while @input != 4
-      options
-      list_user_options
+      list_options
       get_user_input
     end
   end
@@ -33,12 +32,8 @@ class ComicInformer::CLI #namespacing this CLI module that belongs to ComicInfor
   end
 
   #names of  user options.
-  def options
+  def list_options
     @options = ["New Releases", "Future Releases", "Last Weeks Releases", "Exit"]
-  end
-
-  #indexes user options. index +1 because arrays start at 0, allows user input to start at 1.
-  def list_user_options
     @options.each_with_index do |option, index|
       puts "#{index + 1}. #{option}".blue
     end
@@ -54,7 +49,7 @@ class ComicInformer::CLI #namespacing this CLI module that belongs to ComicInfor
   #checks to make sure user input is a valid input. Only integers are valid inputs. 0 and anything > then the displayed options is an invalid input.
   #invalid inputs will ask for user to enter a valid input
   def valid_input(input, options)
-    if @input.to_i <= options.length && @input.to_i > 0
+    if @input.to_i <=  options.length && @input.to_i > 0
       true
     else
       puts "\nYour input was not recognized. Please enter a valid selection.\n".red
@@ -102,7 +97,7 @@ class ComicInformer::CLI #namespacing this CLI module that belongs to ComicInfor
   # list avilable publishers for the week.
   def publisher_index
     @publishers.each_with_index do |publisher, index|
-      puts "#{index + 1}. #{publisher}"
+      puts "#{index + 1}. #{publisher}".cyan
     end
     puts "\nPlease select a publisher from the list above.\n"
   end
@@ -118,7 +113,6 @@ class ComicInformer::CLI #namespacing this CLI module that belongs to ComicInfor
     if @publisher_input.to_i <= @publishers.length && @publisher_input.to_i > 0
       true
     else
-      publisher_index
       puts "\nYour input was not recognized. Please enter a valid selection\n".red
       publisher_user_input
     end
