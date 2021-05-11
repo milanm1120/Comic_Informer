@@ -17,20 +17,15 @@ class ComicInformer::Publisher
     api_list['comics'].each do |comic|
       if
         user_input_of_publisher == comic['publisher']
-        output << "\nTitle: #{comic['title']}".red
-        output << "Creators: #{comic['creators']}".blue
-        output << "Release Date: #{comic['release_date']}".yellow
-
-        if
-          comic['description'] != ''
-          output << "Description: #{comic['description']}\n"
-
-          output << "Price: #{comic['price']}".green
-        end
-        puts output
-        puts "\n"
+        output << "\nTitle: #{comic['title']}".red if comic['title'] != ''
+        output << "Creators: #{comic['creators']}".blue if comic['creators'] != ''
+        output << "Release Date: #{comic['release_date']}".yellow if comic['release_date'] != ''
+        output << "Description: #{comic['description']}" if comic['description'] != ''
+        output << "Price: #{comic['price']}".green if comic['price'] != ''
       end
     end
+    puts output
+    puts "\n"
   end
 
 end

@@ -31,7 +31,7 @@ class ComicInformer::CLI #namespacing this CLI module that belongs to ComicInfor
     puts "                                   MM".yellow
   end
 
-  #names of  user options.
+  #names of user options.
   def list_options
     @options = ["New Releases", "Future Releases", "Last Weeks Releases", "Exit"]
     @options.each_with_index do |option, index|
@@ -49,7 +49,7 @@ class ComicInformer::CLI #namespacing this CLI module that belongs to ComicInfor
   #checks to make sure user input is a valid input. Only integers are valid inputs. 0 and anything > then the displayed options is an invalid input.
   #invalid inputs will ask for user to enter a valid input
   def valid_input(input, options)
-    if @input.to_i <=  options.length && @input.to_i > 0
+    if @input.to_i <= options.length && @input.to_i > 0
       true
     else
       puts "\nYour input was not recognized. Please enter a valid selection.\n".red
