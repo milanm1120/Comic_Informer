@@ -68,15 +68,15 @@ class ComicInformer::CLI #namespacing this CLI module that belongs to ComicInfor
     case @input
       when 1
         puts "\nHere is a list of this weeks Newest Releases:\n".red
-        @comics = ComicInformer::API.new_release
+        @api_list = ComicInformer::API.new_release
         level_two
       when 2
         puts "\nHere is a list of Future Releases:\n".red
-        @comics = ComicInformer::API.future_release
+        @api_list = ComicInformer::API.future_release
         level_two
       when 3
         puts "\nHere is a list of Last Weeks Releases:\n".red
-        @comics = ComicInformer::API.last_week_release
+        @api_list = ComicInformer::API.last_week_release
         level_two
       when 4
         goodbye
@@ -91,7 +91,7 @@ class ComicInformer::CLI #namespacing this CLI module that belongs to ComicInfor
 
   # get unique list publishers from ComicInformer::Publsher
   def publisher_list
-    @publishers = ComicInformer::Publisher.get_unique_publishers(@comics)
+    @publishers = ComicInformer::Publisher.get_unique_publishers(@api_list)
   end
 
   # list avilable publishers for the week.
@@ -104,13 +104,13 @@ class ComicInformer::CLI #namespacing this CLI module that belongs to ComicInfor
 
   #shows list of publisher once users input is validated.
   def publisher_user_input
-    @publisher_input = gets.strip.to_i
-    show_publishers(@publisher_input) if publisher_list_validation(@publisher_input, @publisher)
+    @user_publisher_input = gets.strip.to_i
+    show_publishers(@user_publisher_input) if publisher_list_validation(@user_publisher_input, @publisher)
   end
 
   #validating publisher selection. If invalid input, asks user to enter valid input
-  def publisher_list_validation(publisher_input, publishers)
-    if @publisher_input.to_i <= @publishers.length && @publisher_input.to_i > 0
+  def publisher_list_validation(user_publisher_input, publishers)
+    if @user_publisher_input.to_i <= @publishers.length && @user_publisher_input.to_i > 0
       true
     else
       puts "\nYour input was not recognized. Please enter a valid selection\n".red
@@ -119,11 +119,11 @@ class ComicInformer::CLI #namespacing this CLI module that belongs to ComicInfor
   end
 
 
-  def show_publishers(publisher_input)
-    user_input_of_publisher = @publishers[publisher_input.to_i-1]
+  def show_publishers(user_publisher_input)
+    user_input_of_publisher = @publishers[user_publisher_input.to_i-1]
 
     # filter the list on the publisher
-    ComicInformer::Publisher.filter_comics(@comics, user_input_of_publisher)
+    ComicInformer::Publisher.filter_comics(@api_list, user_input_of_publisher)
   end
 
   #goodbye message to user.
