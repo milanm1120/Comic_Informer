@@ -1,7 +1,5 @@
-class ComicInformer::CLI #namespacing this CLI module that belongs to ComicInformer Class
+class ComicInformer::CLI
 
-  #start of the CLI program. ComicInformer::CLI.new.call is called under ./bin/comic_informer
-  #welcomes user and shows user valid inputs. Option 4 is the exit the program.
   def level_one
     logo
     while @input != 4
@@ -31,7 +29,6 @@ class ComicInformer::CLI #namespacing this CLI module that belongs to ComicInfor
     puts "                                   MM".yellow
   end
 
-  #names of user options.
   def list_options
     @options = ["New Releases", "Future Releases", "Last Weeks Releases", "Exit"]
     @options.each_with_index do |option, index|
@@ -40,14 +37,11 @@ class ComicInformer::CLI #namespacing this CLI module that belongs to ComicInfor
     puts "\nPlease select an option from the list above."
   end
 
-  #gets user input from terminal. Shows comic list after verifying throught valid input medthod.
   def get_user_input
     @input = gets.strip.to_i
     show_list(@input) if valid_input(@input, @options)
   end
 
-  #checks to make sure user input is a valid input. Only integers are valid inputs. 0 and anything > then the displayed options is an invalid input.
-  #invalid inputs will ask for user to enter a valid input
   def valid_input(input, options)
     if @input.to_i <= options.length && @input.to_i > 0
       true
@@ -56,27 +50,27 @@ class ComicInformer::CLI #namespacing this CLI module that belongs to ComicInfor
     end
   end
 
-  #will allow to show Publisher list only if user input is valid
   def show_list(chosen_option)
     @options[chosen_option - 1]
     print_publisher_list
   end
 
-  #list of new releases/future release/previous releases or exit the program.
-  # defines @comics based upon user selection.
   def print_publisher_list
     case @input
       when 1
         puts "\nHere is a list of this weeks Newest Releases:\n".red
         @api_list = ComicInformer::API.new_release
+        ComicInformer::Comic.create_objects_from_api(@api_list)
         level_two
       when 2
         puts "\nHere is a list of Future Releases:\n".red
         @api_list = ComicInformer::API.future_release
+        ComicInformer::Comic.create_objects_from_api(@api_list)
         level_two
       when 3
         puts "\nHere is a list of Last Weeks Releases:\n".red
         @api_list = ComicInformer::API.last_week_release
+        ComicInformer::Comic.create_objects_from_api(@api_list)
         level_two
       when 4
         goodbye
@@ -89,28 +83,24 @@ class ComicInformer::CLI #namespacing this CLI module that belongs to ComicInfor
     publisher_user_input
   end
 
-  # get unique list publishers from ComicInformer::Publsher
   def publisher_list
-    @publishers = ComicInformer::Publisher.get_unique_publishers(@api_list)
+    @publisher_list = ComicInformer::Comic.publishers
   end
 
-  # list avilable publishers for the week.
   def publisher_index
-    @publishers.each_with_index do |publisher, index|
+    @publisher_list.each_with_index do |publisher, index|
       puts "#{index + 1}. #{publisher}".cyan
     end
     puts "\nPlease select a publisher from the list above.\n"
   end
 
-  #shows list of publisher once users input is validated.
   def publisher_user_input
     @user_publisher_input = gets.strip.to_i
-    show_publishers(@user_publisher_input) if publisher_list_validation(@user_publisher_input, @publisher)
+    show_publishers(@user_publisher_input) if publisher_list_validation(@user_publisher_input, @publisher_list)
   end
 
-  #validating publisher selection. If invalid input, asks user to enter valid input
-  def publisher_list_validation(user_publisher_input, publishers)
-    if @user_publisher_input.to_i <= @publishers.length && @user_publisher_input.to_i > 0
+  def publisher_list_validation(user_publisher_input, publisher_list)
+    if @user_publisher_input.to_i <= @publisher_list.length && @user_publisher_input.to_i > 0
       true
     else
       puts "\nYour input was not recognized. Please enter a valid selection\n".red
@@ -118,15 +108,18 @@ class ComicInformer::CLI #namespacing this CLI module that belongs to ComicInfor
     end
   end
 
-
   def show_publishers(user_publisher_input)
-    user_input_of_publisher = @publishers[user_publisher_input.to_i-1]
-
-    # filter the list on the publisher
-    ComicInformer::Publisher.filter_comics(@api_list, user_input_of_publisher)
+    user_input_of_publisher = @publisher_list[user_publisher_input.to_i-1]
+    @filtered_list = ComicInformer::Comic.publisher_filter(user_input_of_publisher)
+    show_comics
   end
 
-  #goodbye message to user.
+  def show_comics
+    @filtered_list.each do |comic|
+      comic.show
+    end
+  end
+
   def goodbye
 
     puts "          ,,########################################,,".red

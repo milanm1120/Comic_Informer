@@ -28,4 +28,5 @@ class ComicInformer::Publisher
     puts "\n"
   end
 
+
 end
